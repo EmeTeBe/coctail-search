@@ -11,7 +11,7 @@ export default function Header() {
 
   const isHome = useMemo(() => pathname === "/", [pathname]);
 
-  const { categories, fetchCategories } = useAppStore();
+  const { categories, fetchCategories, searchRecipes } = useAppStore();
 
   useEffect(() => {
     fetchCategories();
@@ -30,9 +30,11 @@ export default function Header() {
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (Object.values(searchFilters).includes("")) {
-      console.log("Faltan")
-      return
+      console.log("Faltan");
+      return;
     }
+    // Consultar recetas
+    searchRecipes(searchFilters);
   };
 
   return (
