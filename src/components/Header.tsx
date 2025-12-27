@@ -11,7 +11,8 @@ export default function Header() {
 
   const isHome = useMemo(() => pathname === "/", [pathname]);
 
-  const { categories, fetchCategories, searchRecipes } = useAppStore();
+  const { categories, fetchCategories, searchRecipes, showNotification } =
+    useAppStore();
 
   useEffect(() => {
     fetchCategories();
@@ -30,7 +31,10 @@ export default function Header() {
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (Object.values(searchFilters).includes("")) {
-      console.log("Faltan");
+      showNotification({
+        text: "Todos los campos son obligatorios",
+        error: true,
+      });
       return;
     }
     // Consultar recetas
@@ -69,6 +73,16 @@ export default function Header() {
               }
             >
               Favoritos
+            </NavLink>
+            <NavLink
+              to="/generate"
+              className={({ isActive }) =>
+                isActive
+                  ? "text-orange-400 uppercase font-bold"
+                  : "text-white uppercase font-bold"
+              }
+            >
+              Generar con IA
             </NavLink>
           </nav>
         </div>
